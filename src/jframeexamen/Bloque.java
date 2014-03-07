@@ -7,9 +7,9 @@ import java.awt.Toolkit;
       import java.awt.Image;
       import java.awt.Toolkit;
 
-    public class Malo extends Base{
+    public class Bloque extends Base{
         
-    public Malo(int posX,int posY){
+    public Bloque(int posX,int posY){
 	super(posX,posY);	
         Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("malo/mano1.1.png"));
         Image malo2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("malo/mano2.2.png"));

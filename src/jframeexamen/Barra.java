@@ -3,9 +3,9 @@ package jframeexamen;
       import java.awt.Image;
       import java.awt.Toolkit;
 
-    public class Bueno extends Base{
+    public class Barra extends Base{
         
-    public Bueno(int posX,int posY){
+    public Barra(int posX,int posY){
 	super(posX,posY);	
         Image bueno1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("bueno/link1.png"));
         Image bueno2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("bueno/link2.png"));

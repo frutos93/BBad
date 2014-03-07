@@ -33,8 +33,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private SoundClip payaso;
     private SoundClip snake;
     private SoundClip waka;
-    private Bueno link;    // Objeto de la clase Elefante
-    private Malo mano;   //Objeto de la clase Raton
+    private Barra link;    // Objeto de la clase Elefante
+    private Bloque mano;   //Objeto de la clase Raton
     private boolean musicafondo;
     private int vidas;
     private int contVidas;
@@ -83,8 +83,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         payaso = new SoundClip("sounds/pashaso.wav");
         snake= new SoundClip("sounds/snake.wav");
         waka= new SoundClip("sounds/waka.wav");
-        link = new Bueno(0, 290);
-        mano = new Malo(getWidth() / 2, getHeight() - 55);
+        link = new Barra(getWidth()/2, getHeight());
+        mano = new Bloque(getWidth() / 2, getHeight() - 55);
         setBackground(Color.black);
         addKeyListener(this);
         addMouseListener(this);
@@ -247,9 +247,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         if (link.getPosX() + link.getAncho() > getWidth()) {
             link.setPosX(getWidth() - link.getAncho());
         }
-        if (mano.getPosX() < getWidth() / 2) {
-            mano.setPosX(getWidth() / 2);
-        }
+        
         if (mano.getPosX() + mano.getAncho() > getWidth()) {
             mano.setPosX(getWidth() - mano.getAncho());
         }
