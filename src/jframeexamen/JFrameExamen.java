@@ -97,7 +97,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-        bola= new Ball(bar.getPosX() +20,bar.getPosY() +5);
+        bola= new Ball(bar.getPosX()+20,bar.getPosY()- 30);
             for (int i = 1; i <15; i++) {
                 if (i==1) {
                     pill = new Bloque(40, 70);
@@ -421,6 +421,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                     
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
+                
+                g.drawImage(bola.getImagenI(), bola.getPosX(),bola.getPosY(),this);                
                 g.drawImage(bar.getImagenI(), bar.getPosX(), bar.getPosY(), this);
                 
                 g.setColor(Color.white);
