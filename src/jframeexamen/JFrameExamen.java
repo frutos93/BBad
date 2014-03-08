@@ -22,7 +22,7 @@ import java.io.FileWriter;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
+import java.util.LinkedList;
 
 public class JFrameExamen extends JFrame implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 
@@ -33,8 +33,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private SoundClip payaso;
     private SoundClip snake;
     private SoundClip waka;
-    private Barra link;    // Objeto de la clase Elefante
-    private Bloque mano;   //Objeto de la clase Raton
+    private Bloque pill;    // Objeto de la clase Elefante
+    private Barra1 bar;   //Objeto de la clase Raton
     private boolean musicafondo;
     private int vidas;
     private int contVidas;
@@ -44,18 +44,14 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private boolean move;
     private boolean pausa;
     private long tiempoActual;
-    private double z; //posición y
-    private double vz0; //velocidad y inicial;
-    private double x;// posición x;
-    private double vx0; //velocidad x inicial ;
-    private double velocidadInicial;
     private double tiempo;
     private boolean puedoDisparar;
     private int angulo;
     private boolean instrucciones;
     private final String nombreArchivo = "savedState.txt";
-    private int rand;       
     private boolean puedoGrabar;
+    private int valordemapa;
+    private LinkedList lista;
 
     /**
      * Constructor vacio de la clase <code>JFrameExamen</code>.
@@ -72,6 +68,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      * usarse en el <code>Applet</code> y se definen funcionalidades.
      */
     public void init() {
+        valordemapa = (int) (Math.random() * ((3 - 1)));
+        lista= new LinkedList();
         setSize(800, 500);
         pausa = false;
         move = false;
@@ -81,28 +79,28 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         vidas = 5;                    //vidaas iniciales
         contVidas = 0;                    //contador de vidas, cada 3 puntos se restará una vida
         payaso = new SoundClip("sounds/pashaso.wav");
-        snake= new SoundClip("sounds/snake.wav");
-        waka= new SoundClip("sounds/waka.wav");
-        link = new Barra(getWidth()/2, getHeight());
-        mano = new Bloque(getWidth() / 2, getHeight() - 55);
+        snake = new SoundClip("sounds/snake.wav");
+        waka = new SoundClip("sounds/waka.wav");
+        bar = new Barra1(getWidth() / 2, getHeight() - 30);
         setBackground(Color.black);
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-        //Se cargan los sonidos.
-        z = 290;
-        angulo = 45;
-        Random r = new Random();
-        rand = r.nextInt(108 - 75) + 75;
-        velocidadInicial = (int) rand;
-        //se aplica la fórmula v0=v0.senθ
-        vz0 = velocidadInicial * Math.sin(Math.toRadians(angulo));
-        //se aplica la fórmula v0=v0.cosθ
-        vx0 = velocidadInicial * Math.cos(Math.toRadians(angulo));
-        x = 10;
-        tiempo = 0;
-        puedoDisparar = false;
-        URL goURL = this.getClass().getResource("malo/creditos.jpg");
+            for (int i = 1; i <=10; i++) {
+                if (i==1) {
+                    pill = new Bloque(5, 10);
+                    lista.add(pill);
+                } else {    
+                    Bloque pillaux = (Bloque)lista.get(i-1);
+                    pill = new Bloque(pillaux.getPosX() + 3, pillaux.getPosY());
+                    lista.add(pill);
+                }   
+                
+            }
+            
+        
+
+        URL goURL = this.getClass().getResource("pill/creditos.jpg");
         game_over = Toolkit.getDefaultToolkit().getImage(goURL);
         instrucciones = false;
         puedoGrabar = true;
@@ -165,48 +163,21 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
 
         long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
         tiempoActual += tiempoTranscurrido;
-        link.actualiza(tiempoTranscurrido);
-        mano.actualiza(tiempoTranscurrido);
+        pill.actualiza(tiempoTranscurrido);
+        bar.actualiza(tiempoTranscurrido);
         double incrementoTiempo = 0.05;
         tiempo += incrementoTiempo;    //actualizar el tiempo y la nueva posicion.
 
-        if (puedoDisparar) {
-            link.setMoviendose(true);
-            link.setPosX((int) x);
-            link.setPosY((int) z);
-            //se aplica la fórmula x= v0.cosθ.t
-            x = vx0 * Math.cos(Math.toRadians(angulo)) * tiempo;
-            //posicionamos el proyectil respecto a sus coordenadas iniciales.
-            x = x + 10;
-            double a = -9.81;
-            //se aplica la fórmula y(t)=v0 . sen θ . t - .5 g t2.
-            z = vz0 * Math.sin(Math.toRadians(angulo)) * tiempo + 0.5 * a * tiempo * tiempo;
-            //posicionamos el proyectil respecto a sus coordenadas iniciales.
-            z = 300 - z;
-
-        } else {
-            z = 290;
-            angulo = 45;
-            Random r = new Random();
-            rand = r.nextInt(108 - 75) + 75;
-            velocidadInicial = (int) rand;
-            //se aplica la fórmula v0=v0.senθ
-            vz0 = velocidadInicial * Math.sin(Math.toRadians(angulo));
-            //se aplica la fórmula v0=v0.cosθ
-            vx0 = velocidadInicial * Math.cos(Math.toRadians(angulo));
-            x = 10;
-            tiempo = 0;
-        }
         if (move) {
-            mano.setMoviendose(true);
+            bar.setMoviendose(true);
             switch (direccion) {
                 case 3: {
-                    mano.setPosX(mano.getPosX() - 3);
+                    bar.setPosX(bar.getPosX() - 3);
                     break; //se mueve hacia la izquierda
                 }
                 case 4: {
 
-                    mano.setPosX(mano.getPosX() + 3);
+                    bar.setPosX(bar.getPosX() + 3);
                     break; //se mueve hacia la derecha
                 }
             }
@@ -220,49 +191,50 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void checaColision() {
 
-        if (link.getPosY() < 0) {
-            link.setPosY(0);
+        if (pill.getPosY() < 0) {
+            pill.setPosY(0);
         }
 
-        if (link.getPosY() + link.getAlto() > getHeight()) {
-            link.setPosY(getHeight() / 2);
+        if (pill.getPosY() + pill.getAlto() > getHeight()) {
+            pill.setPosY(getHeight() / 2);
             puedoDisparar = false;
             contVidas++;
             if (contVidas == 3) {
                 vidas--;
                 contVidas = 0;
             }
-            if(!musicafondo){
-            snake.play();
+            if (!musicafondo) {
+                snake.play();
             }
-            link.setPosX(0);
-            link.setPosY(290);
-            link.setMoviendose(false);
+            pill.setPosX(0);
+            pill.setPosY(290);
+            pill.setMoviendose(false);
         }
 
-        if (link.getPosX() < 0) {
-            link.setPosX(0);
+        if (pill.getPosX() < 0) {
+            pill.setPosX(0);
         }
 
-        if (link.getPosX() + link.getAncho() > getWidth()) {
-            link.setPosX(getWidth() - link.getAncho());
+        if (pill.getPosX() + pill.getAncho() > getWidth()) {
+            pill.setPosX(getWidth() - pill.getAncho());
         }
-        
-        if (mano.getPosX() + mano.getAncho() > getWidth()) {
-            mano.setPosX(getWidth() - mano.getAncho());
+        if (pill.getPosX() < 0) {
+            pill.setPosX(0);
         }
 
-        if (mano.intersecta(link)) {
-            link.setPosY(getHeight() / 2);
-            if(!musicafondo){
+        if (bar.getPosX() + bar.getAncho() > getWidth()) {
+            bar.setPosX(getWidth() - bar.getAncho());
+        }
+        if (bar.getPosX() < 0) {
+            bar.setPosX(0);
+        }
+
+        if (bar.intersecta(pill)) {
+            pill.setPosY(getHeight() / 2);
+            if (!musicafondo) {
                 waka.play();
             }
             puedoDisparar = false;
-            link.setPosX(0);
-            link.setPosY(290);
-            score = score + 100;
-            link.setMoviendose(false);
-
         }
 
     }
@@ -338,7 +310,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void keyReleased(KeyEvent e) {
         move = false;
-        mano.setMoviendose(false);
+        bar.setMoviendose(false);
         if (e.getKeyCode() == KeyEvent.VK_G) {
             puedoGrabar = true;
         }
@@ -355,7 +327,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void mouseClicked(MouseEvent e) {
         if (!puedoDisparar) {
-            if (link.contiene(e.getX(), e.getY())) {
+            if (pill.contiene(e.getX(), e.getY())) {
                 puedoDisparar = true;
             }
         }
@@ -423,17 +395,20 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void paint1(Graphics g) {
         if (vidas > 0) {
-            if (link != null && mano != null) {
-                g.drawImage(link.getImagenI(), link.getPosX(), link.getPosY(), this);
-                g.drawImage(mano.getImagenI(), mano.getPosX(), mano.getPosY(), this);
+            if (lista != null && bar != null) {
+                for (int i = 1; i <= lista.size(); i++) {
+                    Bloque pillaux = (Bloque) lista.get(i);
+                    g.drawImage(pillaux.getImagenI(), pillaux.getPosX(), pillaux.getPosY(), this);
+                }
+                g.drawImage(bar.getImagenI(), bar.getPosX(), bar.getPosY(), this);
                 g.setColor(Color.white);
                 g.drawString("Puntos = " + score, 20, 50);
                 g.drawString("Vidas = " + vidas, 20, 70);
                 g.drawString("Presiona I para ver instrucciones.", getWidth() - 200, 50);
-                if (pausa) {
-                    g.setColor(Color.white);
-                    g.drawString(link.getPausado(), link.getPosX() + link.getAncho() / 3, link.getPosY() + link.getAlto() / 2);
-                }
+            //    if (pausa) {
+                //        g.setColor(Color.white);
+                //        g.drawString(pill.getPausado(), pill.getPosX() + pill.getAncho() / 3, pill.getPosY() + pill.getAlto() / 2);
+                //    }
                 if (instrucciones) {
                     g.drawString("Instrucciones:", 20, 90);
                     g.drawString("Haz click en el personaje para lanzarlo. Tu objetivo es atraparlo con la mano. Si lo haces, obtendras puntos.", 20, 110);
@@ -467,21 +442,18 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             Vector datos = new Vector();
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             try (BufferedWriter bw = new BufferedWriter(fw)) {
-                datos.add(link.getPosX());
-                datos.add(link.getPosY());
-                if (link.getMoviendose()) {
+                datos.add(pill.getPosX());
+                datos.add(pill.getPosY());
+                if (pill.getMoviendose()) {
                     datos.add(1);
                 } else {
                     datos.add(0);
                 }
-                datos.add(vz0);
-                datos.add(vx0);
-                datos.add(mano.getPosX());
-                datos.add(mano.getPosY());
+                datos.add(bar.getPosX());
+                datos.add(bar.getPosY());
                 datos.add(contVidas);
                 datos.add(vidas);
                 datos.add(score);
-                datos.add(velocidadInicial);
                 if (move) {
                     datos.add(1);
                 } else {
@@ -527,21 +499,18 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                 datos.add(Double.valueOf(line).intValue());
             }
 
-            link.setPosX((int) datos.get(0));
-            link.setPosY((int) datos.get(1));
-            link.setMoviendose((int) datos.get(2) == 1);
-            vz0 = (int) datos.get(3);
-            vx0 = (int) datos.get(4);
-            mano.setPosX((int) datos.get(5));
-            mano.setPosY((int) datos.get(6));
-            contVidas = (int) datos.get(7);
-            vidas = (int) datos.get(8);
-            score = (int) datos.get(9);
-            velocidadInicial = (int) datos.get(10);
-            move = ((int) datos.get(11) == 1);
-            tiempo = (int) datos.get(12);
-            angulo = (int) datos.get(13);
-            puedoDisparar = ((int) datos.get(14) == 1);
+            pill.setPosX((int) datos.get(0));
+            pill.setPosY((int) datos.get(1));
+            pill.setMoviendose((int) datos.get(2) == 1);
+            bar.setPosX((int) datos.get(3));
+            bar.setPosY((int) datos.get(4));
+            contVidas = (int) datos.get(5);
+            vidas = (int) datos.get(6);
+            score = (int) datos.get(7);
+            move = ((int) datos.get(8) == 1);
+            tiempo = (int) datos.get(9);
+            angulo = (int) datos.get(10);
+            puedoDisparar = ((int) datos.get(11) == 1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(JFrameExamen.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,19 +1,20 @@
 package jframeexamen;
 
+
+import java.awt.Image;
+import java.awt.Toolkit;
+
       import java.awt.Image;
       import java.awt.Toolkit;
 
-    public class Bloque extends Base{
+    public class Barra1 extends Base{
         
-    public Bloque(int posX,int posY){
+    public Barra1(int posX,int posY){
 	super(posX,posY);	
-        Image bueno1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/bluepill.png"));
-
-               
+        Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("barra/barra.png"));
         animacion = new Animacion();
-        animacion.sumaCuadro(bueno1, 100);
+        animacion.sumaCuadro(malo1, 100);
 
-        
 	}
     
     private static final String PAUSADO = "PAUSADO";
