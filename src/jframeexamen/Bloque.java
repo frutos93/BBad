@@ -32,5 +32,10 @@ package jframeexamen;
     public int getGolpes(){
     return golpes;
     }
-    
+    public void addGolpe(){
+        golpes++;
+        if(golpes==3){
+            destruido=true;
+        }
+       }
 }
