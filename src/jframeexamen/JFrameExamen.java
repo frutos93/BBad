@@ -51,7 +51,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private final String nombreArchivo = "savedState.txt";
     private boolean puedoGrabar;
     private int valordemapa;
-    private LinkedList lista;
+    private LinkedList<Bloque> lista;
 
     /**
      * Constructor vacio de la clase <code>JFrameExamen</code>.
@@ -86,12 +86,12 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-            for (int i = 1; i <=10; i++) {
+            for (int i = 1; i <10; i++) {
                 if (i==1) {
                     pill = new Bloque(5, 10);
                     lista.add(pill);
                 } else {    
-                    Bloque pillaux = (Bloque)lista.get(i-1);
+                    Bloque pillaux = (Bloque)lista.get(i-2);
                     pill = new Bloque(pillaux.getPosX() + 3, pillaux.getPosY());
                     lista.add(pill);
                 }   
@@ -396,9 +396,9 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     public void paint1(Graphics g) {
         if (vidas > 0) {
             if (lista != null && bar != null) {
-                for (int i = 1; i <= lista.size(); i++) {
-                    Bloque pillaux = (Bloque) lista.get(i);
-                    g.drawImage(pillaux.getImagenI(), pillaux.getPosX(), pillaux.getPosY(), this);
+                for ( Bloque i: lista) {
+                    
+                    g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
                 g.drawImage(bar.getImagenI(), bar.getPosX(), bar.getPosY(), this);
                 g.setColor(Color.white);
