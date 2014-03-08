@@ -59,6 +59,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private LinkedList<BloqueR> lista4;
     private LinkedList<Bloque> lista5;
     private Image fondo;
+
     /**
      * Constructor vacio de la clase <code>JFrameExamen</code>.
      */
@@ -75,11 +76,11 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void init() {
         valordemapa = (int) (Math.random() * ((3 - 1)));
-        lista= new LinkedList();
-        lista2= new LinkedList();
-        lista3= new LinkedList();
-        lista4= new LinkedList();
-        lista5=new LinkedList();
+        lista = new LinkedList();
+        lista2 = new LinkedList();
+        lista3 = new LinkedList();
+        lista4 = new LinkedList();
+        lista5 = new LinkedList();
 
         setSize(800, 500);
         pausa = false;
@@ -97,57 +98,55 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-        bola= new Ball(bar.getPosX()+20,bar.getPosY()- 30);
-            for (int i = 1; i <15; i++) {
-                if (i==1) {
-                    pill = new Bloque(40, 70);
-                    lista.add(pill);
-                } else {    
-                    Bloque pillaux = (Bloque)lista.get(i-2);
-                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
-                    lista.add(pill);
-                }   
-                
+        bola = new Ball(bar.getPosX() + 20, bar.getPosY() - 30);
+        for (int i = 1; i < 15; i++) {
+            if (i == 1) {
+                pill = new Bloque(40, 70);
+                lista.add(pill);
+            } else {
+                Bloque pillaux = (Bloque) lista.get(i - 2);
+                pill = new Bloque(pillaux.getPosX() + 50, pillaux.getPosY());
+                lista.add(pill);
             }
-            for (int i = 1; i <15; i++) {
-                if (i==1) {
-                    pillR = new BloqueR(40, 120);
-                    lista2.add(pillR);
-                } else {    
-                    BloqueR pillaux = (BloqueR)lista2.get(i-2);
-                    pillR = new BloqueR(pillaux.getPosX()+50, pillaux.getPosY());
-                    lista2.add(pillR);
-                }   
-                
+
+        }
+        for (int i = 1; i < 15; i++) {
+            if (i == 1) {
+                pillR = new BloqueR(40, 120);
+                lista2.add(pillR);
+            } else {
+                BloqueR pillaux = (BloqueR) lista2.get(i - 2);
+                pillR = new BloqueR(pillaux.getPosX() + 50, pillaux.getPosY());
+                lista2.add(pillR);
             }
-           for (int i = 1; i <15; i++) {
-                if (i==1) {
-                    pill = new Bloque(40, 170);
-                    lista3.add(pill);
-                } else {    
-                    Bloque pillaux = (Bloque)lista3.get(i-2);
-                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
-                    lista3.add(pill);
-                }   
-                
+
+        }
+        for (int i = 1; i < 15; i++) {
+            if (i == 1) {
+                pill = new Bloque(40, 170);
+                lista3.add(pill);
+            } else {
+                Bloque pillaux = (Bloque) lista3.get(i - 2);
+                pill = new Bloque(pillaux.getPosX() + 50, pillaux.getPosY());
+                lista3.add(pill);
             }
-           for (int i = 1; i <15; i++) {
-                if (i==1) {
-                    pillR = new BloqueR(40, 220);
-                    lista4.add(pillR);
-                } else {    
-                    BloqueR pillaux = (BloqueR)lista4.get(i-2);
-                    pillR = new BloqueR(pillaux.getPosX()+50, pillaux.getPosY());
-                    lista4.add(pillR);
-                }   
-                
+
+        }
+        for (int i = 1; i < 15; i++) {
+            if (i == 1) {
+                pillR = new BloqueR(40, 220);
+                lista4.add(pillR);
+            } else {
+                BloqueR pillaux = (BloqueR) lista4.get(i - 2);
+                pillR = new BloqueR(pillaux.getPosX() + 50, pillaux.getPosY());
+                lista4.add(pillR);
             }
-            
-        
+
+        }
 
         URL goURL = this.getClass().getResource("pill/creditos.jpg");
         game_over = Toolkit.getDefaultToolkit().getImage(goURL);
-        URL fURL  = this.getClass().getResource("Fondo/FondoDos.jpg");
+        URL fURL = this.getClass().getResource("Fondo/FondoDos.jpg");
         fondo = Toolkit.getDefaultToolkit().getImage(fURL).getScaledInstance(getWidth(), getHeight(), 1);
         instrucciones = false;
         puedoGrabar = true;
@@ -161,7 +160,6 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     public void start() {
         // Declaras un hilo
         payaso.setLooping(true);
-        payaso.play();
         Thread th = new Thread(this);
         // Empieza el hilo
         th.start();
@@ -237,12 +235,20 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      * armadura y además con las orillas del <code>Applet</code>.
      */
     public void checaColision() {
-        
         if (bar.getPosX() + bar.getAncho() > getWidth()) {
             bar.setPosX(getWidth() - bar.getAncho());
         }
         if (bar.getPosX() < 0) {
             bar.setPosX(0);
+        }
+        for (Bloque i : lista) {
+            if (bola.intersec(i)) {
+                if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
+                    bola.setVelY(-bola.getVelY());
+                } else {           //por la izquierda o la derecha
+                    bola.setVelX(-bola.getVelX());
+                }
+            }
         }
 
     }
@@ -405,31 +411,31 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         if (vidas > 0) {
             g.drawImage(fondo, 0, 0, this);
             if (lista != null && bar != null) {
-                for ( Bloque i: lista) {
-                    
+                for (Bloque i : lista) {
+
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
-                for ( BloqueR i: lista2) {
-                    
+                for (BloqueR i : lista2) {
+
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
-                for ( Bloque i: lista3) {
-                    
+                for (Bloque i : lista3) {
+
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
-                for ( BloqueR i: lista4) {
-                    
+                for (BloqueR i : lista4) {
+
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
-                
-                g.drawImage(bola.getImagenI(), bola.getPosX(),bola.getPosY(),this);                
+
+                g.drawImage(bola.getImagenI(), bola.getPosX(), bola.getPosY(), this);
                 g.drawImage(bar.getImagenI(), bar.getPosX(), bar.getPosY(), this);
-                
+
                 g.setColor(Color.white);
                 g.drawString("Puntos = " + score, 20, 50);
                 g.drawString("Vidas = " + vidas, 20, 70);
                 g.drawString("Presiona I para ver instrucciones.", getWidth() - 200, 50);
-            //    if (pausa) {
+                //    if (pausa) {
                 //        g.setColor(Color.white);
                 //        g.drawString(pill.getPausado(), pill.getPosX() + pill.getAncho() / 3, pill.getPosY() + pill.getAlto() / 2);
                 //    }
