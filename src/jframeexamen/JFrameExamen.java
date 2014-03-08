@@ -52,6 +52,10 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private boolean puedoGrabar;
     private int valordemapa;
     private LinkedList<Bloque> lista;
+    private LinkedList<Bloque> lista2;
+    private LinkedList<Bloque> lista3;
+    private LinkedList<Bloque> lista4;
+    private LinkedList<Bloque> lista5;
 
     /**
      * Constructor vacio de la clase <code>JFrameExamen</code>.
@@ -70,6 +74,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     public void init() {
         valordemapa = (int) (Math.random() * ((3 - 1)));
         lista= new LinkedList();
+        lista2= new LinkedList();
         setSize(800, 500);
         pausa = false;
         move = false;
@@ -86,14 +91,25 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-            for (int i = 1; i <10; i++) {
+            for (int i = 1; i <15; i++) {
                 if (i==1) {
-                    pill = new Bloque(5, 10);
+                    pill = new Bloque(40, 40);
                     lista.add(pill);
                 } else {    
                     Bloque pillaux = (Bloque)lista.get(i-2);
-                    pill = new Bloque(pillaux.getPosX() + 3, pillaux.getPosY());
+                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
                     lista.add(pill);
+                }   
+                
+            }
+            for (int i = 1; i <15; i++) {
+                if (i==1) {
+                    pill = new Bloque(40, 90);
+                    lista2.add(pill);
+                } else {    
+                    Bloque pillaux = (Bloque)lista2.get(i-2);
+                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
+                    lista2.add(pill);
                 }   
                 
             }
@@ -397,6 +413,10 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         if (vidas > 0) {
             if (lista != null && bar != null) {
                 for ( Bloque i: lista) {
+                    
+                    g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
+                }
+                for ( Bloque i: lista2) {
                     
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
