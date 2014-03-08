@@ -75,6 +75,9 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         valordemapa = (int) (Math.random() * ((3 - 1)));
         lista= new LinkedList();
         lista2= new LinkedList();
+        lista3= new LinkedList();
+        lista4= new LinkedList();
+        lista5=new LinkedList();
         setSize(800, 500);
         pausa = false;
         move = false;
@@ -93,7 +96,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addMouseMotionListener(this);
             for (int i = 1; i <15; i++) {
                 if (i==1) {
-                    pill = new Bloque(40, 40);
+                    pill = new Bloque(40, 70);
                     lista.add(pill);
                 } else {    
                     Bloque pillaux = (Bloque)lista.get(i-2);
@@ -104,12 +107,34 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             }
             for (int i = 1; i <15; i++) {
                 if (i==1) {
-                    pill = new Bloque(40, 90);
+                    pill = new Bloque(40, 120);
                     lista2.add(pill);
                 } else {    
                     Bloque pillaux = (Bloque)lista2.get(i-2);
                     pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
                     lista2.add(pill);
+                }   
+                
+            }
+           for (int i = 1; i <15; i++) {
+                if (i==1) {
+                    pill = new Bloque(40, 170);
+                    lista3.add(pill);
+                } else {    
+                    Bloque pillaux = (Bloque)lista3.get(i-2);
+                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
+                    lista3.add(pill);
+                }   
+                
+            }
+           for (int i = 1; i <15; i++) {
+                if (i==1) {
+                    pill = new Bloque(40, 220);
+                    lista4.add(pill);
+                } else {    
+                    Bloque pillaux = (Bloque)lista4.get(i-2);
+                    pill = new Bloque(pillaux.getPosX()+50, pillaux.getPosY());
+                    lista4.add(pill);
                 }   
                 
             }
@@ -417,6 +442,14 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
                 for ( Bloque i: lista2) {
+                    
+                    g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
+                }
+                for ( Bloque i: lista3) {
+                    
+                    g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
+                }
+                for ( Bloque i: lista4) {
                     
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
