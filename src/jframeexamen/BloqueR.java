@@ -3,13 +3,14 @@ package jframeexamen;
       import java.awt.Image;
       import java.awt.Toolkit;
 
-    public class Bloque extends Base{
+    public class BloqueR extends Base{
+        
         private int golpes;
         private boolean destruido;
         
-    public Bloque(int posX,int posY){
+    public BloqueR(int posX,int posY){
 	super(posX,posY);	
-        Image bueno1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/green pill 1.png"));               
+        Image bueno1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/red pill 1.png"));               
         animacion = new Animacion();
         animacion.sumaCuadro(bueno1, 100);
         destruido= false;
