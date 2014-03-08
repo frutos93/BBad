@@ -235,50 +235,11 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void checaColision() {
 
-        if (pill.getPosY() < 0) {
-            pill.setPosY(0);
-        }
-
-        if (pill.getPosY() + pill.getAlto() > getHeight()) {
-            pill.setPosY(getHeight() / 2);
-            puedoDisparar = false;
-            contVidas++;
-            if (contVidas == 3) {
-                vidas--;
-                contVidas = 0;
-            }
-            if (!musicafondo) {
-                snake.play();
-            }
-            pill.setPosX(0);
-            pill.setPosY(290);
-            pill.setMoviendose(false);
-        }
-
-        if (pill.getPosX() < 0) {
-            pill.setPosX(0);
-        }
-
-        if (pill.getPosX() + pill.getAncho() > getWidth()) {
-            pill.setPosX(getWidth() - pill.getAncho());
-        }
-        if (pill.getPosX() < 0) {
-            pill.setPosX(0);
-        }
-
         if (bar.getPosX() + bar.getAncho() > getWidth()) {
             bar.setPosX(getWidth() - bar.getAncho());
         }
         if (bar.getPosX() < 0) {
             bar.setPosX(0);
-        }
-
-        if (bar.intersecta(pill)) {
-            pill.setPosY(getHeight() / 2);
-            if (!musicafondo) {
-                waka.play();
-            }
-            puedoDisparar = false;
         }
 
     }
