@@ -57,7 +57,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private LinkedList<Bloque> lista3;
     private LinkedList<BloqueR> lista4;
     private LinkedList<Bloque> lista5;
-
+    private Image fondo;
     /**
      * Constructor vacio de la clase <code>JFrameExamen</code>.
      */
@@ -144,6 +144,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
 
         URL goURL = this.getClass().getResource("pill/creditos.jpg");
         game_over = Toolkit.getDefaultToolkit().getImage(goURL);
+        URL fURL  = this.getClass().getResource("Fondo/FondoDos.jpg");
+        fondo = Toolkit.getDefaultToolkit().getImage(fURL).getScaledInstance(getWidth(), getHeight(), 1);
         instrucciones = false;
         puedoGrabar = true;
     }
@@ -437,6 +439,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void paint1(Graphics g) {
         if (vidas > 0) {
+            g.drawImage(fondo, 0, 0, this);
             if (lista != null && bar != null) {
                 for ( Bloque i: lista) {
                     
@@ -455,6 +458,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                     g.drawImage(i.getImagenI(), i.getPosX(), i.getPosY(), this);
                 }
                 g.drawImage(bar.getImagenI(), bar.getPosX(), bar.getPosY(), this);
+                
                 g.setColor(Color.white);
                 g.drawString("Puntos = " + score, 20, 50);
                 g.drawString("Vidas = " + vidas, 20, 70);
