@@ -33,6 +33,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private SoundClip payaso;
     private SoundClip snake;
     private SoundClip waka;
+    private Ball bola;
     private Bloque pill;
     private BloqueR pillR;// Objeto de la clase Elefante
     private Barra1 bar;   //Objeto de la clase Raton
@@ -79,6 +80,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         lista3= new LinkedList();
         lista4= new LinkedList();
         lista5=new LinkedList();
+
         setSize(800, 500);
         pausa = false;
         move = false;
@@ -95,6 +97,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
+        bola= new Ball(bar.getPosX() +20,bar.getPosY() +5);
             for (int i = 1; i <15; i++) {
                 if (i==1) {
                     pill = new Bloque(40, 70);
@@ -234,7 +237,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      * armadura y además con las orillas del <code>Applet</code>.
      */
     public void checaColision() {
-
+        
         if (bar.getPosX() + bar.getAncho() > getWidth()) {
             bar.setPosX(getWidth() - bar.getAncho());
         }
