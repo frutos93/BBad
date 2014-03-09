@@ -2,7 +2,6 @@ package jframeexamen;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -16,8 +15,8 @@ public class Ball extends Base {
         Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/BolaDos.png"));
         animacion = new Animacion();
         animacion.sumaCuadro(malo1, 100);
-        velX = 5;
-        velY = -5;
+        velX =(int) (Math.random() * 5);
+        velY = -4;
     }
 
     public int getVelX() {

@@ -217,12 +217,12 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             bar.setMoviendose(true);
             switch (direccion) {
                 case 3: {
-                    bar.setPosX(bar.getPosX() - 3);
+                    bar.setPosX(bar.getPosX() - 6);
                     break; //se mueve hacia la izquierda
                 }
                 case 4: {
 
-                    bar.setPosX(bar.getPosX() + 3);
+                    bar.setPosX(bar.getPosX() + 6);
                     break; //se mueve hacia la derecha
                 }
             }
@@ -279,6 +279,19 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                 }
             }
         }
+        
+        if (bola.intersec(bar)) {
+                bola.setVelY(-bola.getVelY());
+        }
+        
+        if(bola.getPosX() < 5){
+            bola.setVelX(-bola.getVelX());
+        } else if(bola.getPosY() < 20){
+            bola.setVelY(-bola.getVelY());
+        } else if(bola.getPosX() + bola.getAncho() > getWidth()){
+            bola.setVelX(-bola.getVelX());
+        }
+            
 
     }
 
