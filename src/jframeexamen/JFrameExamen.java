@@ -12,16 +12,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.net.URL;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.LinkedList;
 
 public class JFrameExamen extends JFrame implements Runnable, KeyListener, MouseListener, MouseMotionListener {
@@ -39,25 +29,20 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
     private Barra1 bar;   //Objeto de la clase Raton
     private boolean musicafondo;
     private int vidas;
-    private int contVidas;
     private Image game_over;        //Imagen de Game-over
     private int direccion;          //Variable para la dirección del personaje
     private int score;
     private boolean move;
     private boolean pausa;
     private long tiempoActual;
-    private double tiempo;
     private boolean puedoDisparar;
     private int angulo;
     private boolean instrucciones;
-    private final String nombreArchivo = "savedState.txt";
-    private boolean puedoGrabar;
-    private int valordemapa;
+
     private LinkedList<Bloque> lista;
     private LinkedList<BloqueR> lista2;
     private LinkedList<Bloque> lista3;
     private LinkedList<BloqueR> lista4;
-    private LinkedList<Bloque> lista5;
     private Image fondo;
 
     /**
@@ -75,21 +60,17 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
      * usarse en el <code>Applet</code> y se definen funcionalidades.
      */
     public void init() {
-        valordemapa = (int) (Math.random() * ((3 - 1)));
+        setSize(800, 500);
         lista = new LinkedList();
         lista2 = new LinkedList();
         lista3 = new LinkedList();
         lista4 = new LinkedList();
-        lista5 = new LinkedList();
-
-        setSize(800, 500);
         pausa = false;
         move = false;
         musicafondo = false;
         direccion = 0;
         score = 0;                    //puntaje inicial
         vidas = 5;                    //vidaas iniciales
-        contVidas = 0;                    //contador de vidas, cada 3 puntos se restará una vida
         payaso = new SoundClip("sounds/pashaso.wav");
         snake = new SoundClip("sounds/snake.wav");
         waka = new SoundClip("sounds/waka.wav");
@@ -149,7 +130,6 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         URL fURL = this.getClass().getResource("Fondo/FondoDos.jpg");
         fondo = Toolkit.getDefaultToolkit().getImage(fURL).getScaledInstance(getWidth(), getHeight(), 1);
         instrucciones = false;
-        puedoGrabar = true;
     }
 
     /**
@@ -210,8 +190,6 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         tiempoActual += tiempoTranscurrido;
         pill.actualiza(tiempoTranscurrido);
         bar.actualiza(tiempoTranscurrido);
-        double incrementoTiempo = 0.05;
-        tiempo += incrementoTiempo;    //actualizar el tiempo y la nueva posicion.
 
         if (move) {
             bar.setMoviendose(true);
@@ -357,14 +335,9 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         } else if (e.getKeyCode() == KeyEvent.VK_S && !pausa) {
             musicafondo = !musicafondo;
 
-        } else if (e.getKeyCode() == KeyEvent.VK_G && puedoGrabar && !instrucciones) {
-            grabaArchivo();
-
         } else if (e.getKeyCode() == KeyEvent.VK_I) {
             instrucciones = !instrucciones;
-        } else if (e.getKeyCode() == KeyEvent.VK_C) {
-            cargarArchivo();
-        }
+        } 
     }
 
     public void keyTyped(KeyEvent e) {
@@ -381,7 +354,6 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         move = false;
         bar.setMoviendose(false);
         if (e.getKeyCode() == KeyEvent.VK_G) {
-            puedoGrabar = true;
         }
     }
 
@@ -512,96 +484,4 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
         }
     }
 
-    /**
-     * Metodo <I>grabaArchivo</I> utilizado para grabar los datos del juego en
-     * un archivo con extension <I>.txt</I>
-     */
-    public void grabaArchivo() {
-
-        try {
-            File file = new File(nombreArchivo);
-            if (file.exists()) {
-                file.delete();
-            }
-            file.createNewFile();
-            Vector datos = new Vector();
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            try (BufferedWriter bw = new BufferedWriter(fw)) {
-                datos.add(pill.getPosX());
-                datos.add(pill.getPosY());
-                if (pill.getMoviendose()) {
-                    datos.add(1);
-                } else {
-                    datos.add(0);
-                }
-                datos.add(bar.getPosX());
-                datos.add(bar.getPosY());
-                datos.add(contVidas);
-                datos.add(vidas);
-                datos.add(score);
-                if (move) {
-                    datos.add(1);
-                } else {
-                    datos.add(0);
-                }
-                datos.add(tiempo);
-                datos.add(angulo);
-                if (puedoDisparar) {
-                    datos.add(1);
-                } else {
-                    datos.add(0);
-                }
-
-                for (Object i : datos) {
-                    bw.write("" + i + "\n");
-                }
-                puedoGrabar = false;
-            }
-
-        } catch (IOException ioe) {
-            System.out.println(" Se obtuvo error al grabar archivo : " + ioe.toString());
-        }
-    }
-
-    /**
-     * Metodo <I>cargarArchivo</I> utilizado para cargar los datos que fueron
-     * grabados la ultima vez que se jugo. El archivo tiene extension
-     * <I>.txt</I>
-     */
-    public void cargarArchivo() {
-        BufferedReader br;
-        try {
-            File file = new File(nombreArchivo);
-            if (!file.exists()) {
-                return;
-            }
-            br = new BufferedReader(new FileReader(file));
-            Vector datos = new Vector();
-            for (String line; (line = br.readLine()) != null;) {
-                if (line.isEmpty()) {
-                    break;
-                }
-                datos.add(Double.valueOf(line).intValue());
-            }
-
-            pill.setPosX((int) datos.get(0));
-            pill.setPosY((int) datos.get(1));
-            pill.setMoviendose((int) datos.get(2) == 1);
-            bar.setPosX((int) datos.get(3));
-            bar.setPosY((int) datos.get(4));
-            contVidas = (int) datos.get(5);
-            vidas = (int) datos.get(6);
-            score = (int) datos.get(7);
-            move = ((int) datos.get(8) == 1);
-            tiempo = (int) datos.get(9);
-            angulo = (int) datos.get(10);
-            puedoDisparar = ((int) datos.get(11) == 1);
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(JFrameExamen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(JFrameExamen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 }
