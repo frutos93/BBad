@@ -9,16 +9,23 @@ public class Ball extends Base {
 
     private int velX;
     private int velY;
-    
+    private boolean choca;
     public Ball(int posX, int posY) {
         super(posX, posY);
         Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/BolaDos.png"));
         animacion = new Animacion();
         animacion.sumaCuadro(malo1, 100);
-        velX =(int) (Math.random() * 5);
+        velX =(int) (Math.random() * 10) - 5 ;
         velY = -4;
+        choca = false;
     }
-
+    public boolean getChoca(){
+        return choca;
+    }
+    
+    public void setChoca(boolean c){
+        choca = c;
+    }
     public int getVelX() {
         return velX;
     }

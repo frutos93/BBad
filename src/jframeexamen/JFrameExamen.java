@@ -244,7 +244,8 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             bar.setPosX(0);
         }
         for (Bloque i : lista) {
-            if (bola.intersec(i)) {
+            if (bola.intersecta(i)) {
+                
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
@@ -253,7 +254,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             }
         }
         for (BloqueR i : lista2) {
-            if (bola.intersec(i)) {
+            if (bola.intersecta(i)) {
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
@@ -262,7 +263,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             }
         }
         for (Bloque i : lista3) {
-            if (bola.intersec(i)) {
+            if (bola.intersecta(i)) {
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
@@ -271,7 +272,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             }
         }
         for (BloqueR i : lista4) {
-            if (bola.intersec(i)) {
+            if (bola.intersecta(i)) {
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
