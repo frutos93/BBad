@@ -57,20 +57,6 @@ public class Base {
         return getPerimetro().contains(posX, posY);
     }
 
-    public Rectangle getRect() {                             //se hace el rectangulo pequeño 
-        int x = getPosX() + getAncho() / 4;
-        int y = getPosY() + (getAlto() * 3 / 4);
-        int wi = getAncho() / 2;
-        int ht = getAlto() / 4;
-
-        return new Rectangle(x, y, wi, ht);
-
-    }
-
-    public boolean intersec(Base obj) {
-        return getPerimetro().intersects(obj.getRect());
-    }
-
     public void actualiza(long t) {
         if (moviendose) {
             animacion.actualiza(t);

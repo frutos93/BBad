@@ -12,13 +12,16 @@ public class Ball extends Base {
 
     public Ball(int posX, int posY) {
         super(posX, posY);
-        Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/BolaDos.png"));
+        Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("pill/BolaDos.png")).getScaledInstance(30, 30, 1);
         animacion = new Animacion();
         animacion.sumaCuadro(malo1, 100);
-        velX =(int) (Math.random() * 10) - 5 ;
+        velX = 0;
+        while (velX == 0) {
+            velX = (int) (Math.random() * 10) - 5;
+        }
         velY = -4;
     }
-    
+
     public int getVelX() {
         return velX;
     }
@@ -26,12 +29,12 @@ public class Ball extends Base {
     public int getVelY() {
         return velY;
     }
-    
-    public void setVelX(int v){
+
+    public void setVelX(int v) {
         velX = v;
     }
-    
-    public void setVelY(int v){
+
+    public void setVelY(int v) {
         velY = v;
     }
     private static final String PAUSADO = "PAUSADO";

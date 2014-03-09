@@ -251,7 +251,7 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
                 } else {                                                                                           //por la izquierda o la derecha
                     bola.setVelX(-bola.getVelX());
                 }
-            } else if( !bola.intersecta(i)){
+            } else {
                 i.setChoca(false);
             }
         }
