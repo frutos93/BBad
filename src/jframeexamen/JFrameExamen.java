@@ -244,55 +244,67 @@ public class JFrameExamen extends JFrame implements Runnable, KeyListener, Mouse
             bar.setPosX(0);
         }
         for (Bloque i : lista) {
-            if (bola.intersecta(i)) {
-                
+            if (bola.intersecta(i) && !i.getChoca()) {
+                i.setChoca(true);
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
                     bola.setVelX(-bola.getVelX());
                 }
+            } else if( !bola.intersecta(i)){
+                i.setChoca(false);
             }
         }
         for (BloqueR i : lista2) {
-            if (bola.intersecta(i)) {
+            if (bola.intersecta(i) && !i.getChoca()) {
+                i.setChoca(true);
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
                     bola.setVelX(-bola.getVelX());
                 }
+
+            } else if( !bola.intersecta(i)){
+                i.setChoca(false);
             }
         }
         for (Bloque i : lista3) {
-            if (bola.intersecta(i)) {
+            if (bola.intersecta(i) && !i.getChoca()) {
+                i.setChoca(true);
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
-                } else {                                                                                           //por la izquierda o la derecha
+                } else if( !bola.intersecta(i)){                                                                                           //por la izquierda o la derecha
                     bola.setVelX(-bola.getVelX());
                 }
+
+            } else {
+                i.setChoca(false);
             }
         }
         for (BloqueR i : lista4) {
-            if (bola.intersecta(i)) {
+            if (bola.intersecta(i) && !i.getChoca()) {
+                i.setChoca(true);
                 if (i.getPosY() < bola.getPosY() + bola.getAlto() || i.getPosY() + i.getAlto() > bola.getPosY()) { //por arriba o por abajo
                     bola.setVelY(-bola.getVelY());
                 } else {                                                                                           //por la izquierda o la derecha
                     bola.setVelX(-bola.getVelX());
                 }
+            } else if( !bola.intersecta(i)){
+                i.setChoca(false);
             }
         }
-        
-        if (bola.intersec(bar)) {
-                bola.setVelY(-bola.getVelY());
-        }
-        
-        if(bola.getPosX() < 5){
-            bola.setVelX(-bola.getVelX());
-        } else if(bola.getPosY() < 20){
+
+        if (bola.intersecta(bar)) {
             bola.setVelY(-bola.getVelY());
-        } else if(bola.getPosX() + bola.getAncho() > getWidth()){
+        }
+
+        if (bola.getPosX() < 5) {
+            bola.setVelX(-bola.getVelX());
+        } else if (bola.getPosY() < 20) {
+            bola.setVelY(-bola.getVelY());
+        } else if (bola.getPosX() + bola.getAncho() > getWidth()) {
             bola.setVelX(-bola.getVelX());
         }
-            
 
     }
 
